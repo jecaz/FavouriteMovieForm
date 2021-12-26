@@ -1,26 +1,17 @@
-<div class="row justify-content-center">
-  <div class="col-6">
-    <div class="card box-shadow mt-5">
-      <div class="card-body">
-        <h3 class="text-center my-2 fst-italic">
-          Thank you for submitting form
-        </h3>
-        <hr />
-        <div
-          class="input-group mb-3"
-          *ngFor="let movie of favouriteMovie | keyvalue"
-        >
-          <span class="input-group-text d-inline-block w-25 text-start">{{
-            movieKyes[movie.key]
-          }}</span>
-          <input
-            [ngModel]="movie.value"
-            type="text"
-            class="form-control"
-            aria-label="Chosen movie values"
-          />
-        </div>
-      </div>
-    </div>
+<app-card [title]="'Thank you for submitting form'">
+  <div
+    card-body
+    class="input-group mb-3"
+    *ngFor="let movie of favouriteMovie | keyvalue"
+  >
+    <span class="input-group-text d-inline-block w-25 text-start">{{
+      movieKyes[movie.key]
+    }}</span>
+    <input
+      [ngModel]="movie.value"
+      type="text"
+      class="form-control"
+      aria-label="Chosen movie values"
+    />
   </div>
-</div>
+</app-card>
