@@ -5,10 +5,17 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { EnterModule } from './components/enter/enter.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ThankYouModule } from './components/thank-you/thank-you.module';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, EnterModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    EnterModule,
+    ThankYouModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

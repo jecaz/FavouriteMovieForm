@@ -41,7 +41,9 @@
             </span>
           </div>
           <div class="my-3">
-            <label for="country-select">{{ "Choose a country:" }}</label>
+            <label for="country-select" class="form-label">{{
+              "Choose a country:"
+            }}</label>
             <select
               formControlName="country"
               class="form-select"
@@ -101,12 +103,26 @@
               >Favourite Movie</label
             >
             <input
+              (keyup)="isAutocompleteOpen = false"
               formControlName="favouriteMovie"
               type="text"
               class="form-control"
               id="favouriteMovie"
               placeholder="Enter your favourite movie..."
             />
+            <ng-container
+              *ngIf="!isAutocompleteOpen && movies$ | async as movies"
+            >
+              <ul class="list-group position-absolute w-75 border-bottom">
+                <li
+                  class="list-group-item bg-light text-dark pointer"
+                  *ngFor="let movie of movies"
+                  (click)="selectMovie(movie.Title)"
+                >
+                  {{ movie.Title }}
+                </li>
+              </ul>
+            </ng-container>
           </div>
           <div class="d-flex justify-content-end">
             <button

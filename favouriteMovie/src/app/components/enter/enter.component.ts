@@ -7,16 +7,25 @@ import {
 } from '@angular/forms';
 import { MovieService } from '../../services/movie.service';
 import { DropdownMenu } from '../../models/dropdown.model';
+import { Observable } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  startWith,
+  switchMap,
+} from 'rxjs/operators';
+import { Movie } from '../../models/movie.model';
 
 @Component({
   selector: 'app-enter',
   templateUrl: './enter.component.html',
-  styleUrls: ['./enter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EnterComponent implements OnInit {
   movieForm: FormGroup;
   countryDropdown: DropdownMenu[];
+  movies$: Observable<Movie[]>;
+  isAutocompleteOpen: boolean;
 
   constructor(
     protected formBuilder: FormBuilder,
@@ -24,10 +33,12 @@ export class EnterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.countryDropdown = [
-      { label: 'IRL', value: 'Ireland' },
-      { label: 'GBR', value: 'United Kingdom' },
-    ];
+    this.getCountryDropdown();
+    this.initForm();
+    this.getAutocopletedMovies();
+  }
+
+  initForm() {
     this.movieForm = this.formBuilder.group({
       name: new FormControl('', [
         Validators.required,
@@ -38,9 +49,13 @@ export class EnterComponent implements OnInit {
       postCode: new FormControl(''),
       favouriteMovie: new FormControl(''),
     });
-    this.movieService.getMoviesByTitle('movie', 'year').subscribe((data) => {
-      console.log(data);
-    });
+  }
+
+  getCountryDropdown() {
+    this.countryDropdown = [
+      { label: 'IRL', value: 'Ireland' },
+      { label: 'GBR', value: 'United Kingdom' },
+    ];
   }
 
   submitForm() {
@@ -67,7 +82,6 @@ export class EnterComponent implements OnInit {
     });
   }
   // SOLUTION FOR SETTING VALIDATIONS FOR POST CODE BY USING FUNCTION WHICH RETURNS OBJECT OF TYPE ValidatorFn
-
   // postCodeValidator(country: string): ValidatorFn {
   //   this.movieForm.get('postCode').clearValidators();
   //   return (formControl: FormControl): ValidationErrors => {
@@ -94,21 +108,45 @@ export class EnterComponent implements OnInit {
     // );
     this.movieForm.get('postCode').clearValidators();
     if (this.movieForm.get('country').value === 'Ireland') {
-      this.movieForm.controls.postCode.setValidators([
-        Validators.minLength(6),
-        Validators.maxLength(10),
-      ]);
-    } else if (this.movieForm.get('country').value === 'United Kingdom') {
-      this.movieForm.controls.postCode.setValidators([
-        Validators.required,
-        Validators.pattern(
-          '^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$'
-        ),
-      ]);
+      this.setPostCodeValidatorsIRL();
+    } else {
+      this.setPostCodeValidatorsUK();
     }
     this.movieForm.controls.postCode.updateValueAndValidity({
       emitEvent: false,
       onlySelf: true,
     });
+  }
+
+  private setPostCodeValidatorsIRL() {
+    this.movieForm.controls.postCode.setValidators([
+      Validators.minLength(6),
+      Validators.maxLength(10),
+    ]);
+  }
+
+  private setPostCodeValidatorsUK() {
+    this.movieForm.controls.postCode.setValidators([
+      Validators.required,
+      Validators.pattern(
+        '^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$'
+      ),
+    ]);
+  }
+
+  getAutocopletedMovies() {
+    this.movies$ = this.movieForm.controls.favouriteMovie.valueChanges.pipe(
+      startWith(''),
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((searchValue: string) => {
+        return this.movieService.getMoviesByTitle('movie', searchValue);
+      })
+    );
+  }
+
+  selectMovie(movieTitle: string) {
+    this.isAutocompleteOpen = true;
+    this.movieForm.controls.favouriteMovie.setValue(movieTitle);
   }
 }
