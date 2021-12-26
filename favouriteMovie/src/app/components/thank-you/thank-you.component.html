@@ -1,17 +1,28 @@
-<app-card [title]="'Thank you for submitting form'">
-  <div
-    card-body
-    class="input-group mb-3"
-    *ngFor="let movie of favouriteMovie | keyvalue"
-  >
-    <span class="input-group-text d-inline-block w-25 text-start">{{
-      movieKyes[movie.key]
-    }}</span>
-    <input
-      [ngModel]="movie.value"
-      type="text"
-      class="form-control"
-      aria-label="Chosen movie values"
-    />
+<ng-container *ngIf="favouriteMovie; else noSubmittedForm">
+  <div class="alert alert-success mt-3 w-50 m-auto" role="alert">
+    Form successfully submitted!
   </div>
-</app-card>
+  <app-card [title]="'Thank you for submitting form'">
+    <div
+      card-body
+      class="input-group mb-3"
+      *ngFor="let movie of favouriteMovie | keyvalue"
+    >
+      <span class="input-group-text d-inline-block w-25 text-start">{{
+        movieKyes[movie.key]
+      }}</span>
+      <input
+        disabled
+        [ngModel]="movie.value"
+        type="text"
+        class="form-control bg-light"
+        aria-label="Chosen movie values"
+      />
+    </div>
+  </app-card>
+</ng-container>
+<ng-template #noSubmittedForm>
+  <div class="alert alert-primary mt-5" role="alert">
+    Go to Favourite Movie page to submit the form!
+  </div>
+</ng-template>

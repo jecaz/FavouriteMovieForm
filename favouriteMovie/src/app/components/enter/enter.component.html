@@ -2,13 +2,10 @@
   <form card-body [formGroup]="movieForm" class="p-3">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
-      <input
-        formControlName="name"
-        type="text"
-        class="form-control"
-        id="name"
-        placeholder="Enter your name..."
-      />
+      <app-input
+        [control]="$any(movieForm.get('name'))"
+        [controlName]="'name'"
+      ></app-input>
       <span
         class="error-message"
         *ngIf="
@@ -21,13 +18,10 @@
     </div>
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
-      <input
-        formControlName="username"
-        type="email"
-        class="form-control"
-        id="username"
-        placeholder="Enter your username..."
-      />
+      <app-input
+        [control]="$any(movieForm.get('username'))"
+        [controlName]="'username'"
+      ></app-input>
       <span
         *ngIf="movieForm.get('username').hasError('emailError')"
         class="error-message"
@@ -39,19 +33,12 @@
       <label for="country-select" class="form-label">{{
         "Choose a country:"
       }}</label>
-      <select
-        formControlName="country"
-        class="form-select"
-        name="countries"
-        id="country-select"
-        aria-label="Select country from menu"
+      <app-select
+        [options]="countryDropdown"
+        [control]="$any(movieForm.get('country'))"
+        [controlName]="'country'"
         (change)="selectCountry()"
-      >
-        <option disabled value="">Please select</option>
-        <option *ngFor="let option of countryDropdown" [value]="option.value">
-          {{ option.value }}
-        </option>
-      </select>
+      ></app-select>
       <span
         *ngIf="movieForm.get('country').hasError('requiredError')"
         class="error-message"
@@ -61,13 +48,10 @@
     </div>
     <div class="mb-3">
       <label for="postCode" class="form-label">Post Code</label>
-      <input
-        formControlName="postCode"
-        type="text"
-        class="form-control"
-        id="postCode"
-        placeholder="Enter your postCode..."
-      />
+      <app-input
+        [control]="$any(movieForm.get('postCode'))"
+        [controlName]="'postCode'"
+      ></app-input>
       <span
         *ngIf="
           movieForm.get('postCode').hasError('minLengthError') ||
@@ -92,14 +76,11 @@
     </div>
     <div class="mb-3">
       <label for="favouriteMovie" class="form-label">Favourite Movie</label>
-      <input
+      <app-input
         (keyup)="isAutocompleteOpen = false"
-        formControlName="favouriteMovie"
-        type="text"
-        class="form-control"
-        id="favouriteMovie"
-        placeholder="Enter your favourite movie..."
-      />
+        [control]="$any(movieForm.get('favouriteMovie'))"
+        [controlName]="'favourite movie'"
+      ></app-input>
       <ng-container *ngIf="!isAutocompleteOpen && movies$ | async as movies">
         <ul class="list-group position-absolute w-75 border-bottom">
           <li
@@ -113,9 +94,7 @@
       </ng-container>
     </div>
     <div class="d-flex justify-content-end">
-      <button class="btn btn-primary px-5" type="button" (click)="submitForm()">
-        {{ "Submit" }}
-      </button>
+      <app-button [label]="'Submit'" (click)="submitForm()"></app-button>
     </div>
   </form>
 </app-card>
