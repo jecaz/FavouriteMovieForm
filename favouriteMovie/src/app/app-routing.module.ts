@@ -4,10 +4,7 @@ import { EnterComponent } from './components/enter/enter.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'enter', pathMatch: 'full' },
-  {
-    path: 'enter',
-    component: EnterComponent,
-  },
+  { path: 'enter', component: EnterComponent },
   {
     path: 'thank-you',
     loadChildren: () =>

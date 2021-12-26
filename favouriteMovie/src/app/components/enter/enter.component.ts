@@ -15,6 +15,8 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { Movie } from '../../models/movie.model';
+import { FavouriteMovie } from '../../models/favourite-movie.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-enter',
@@ -29,7 +31,8 @@ export class EnterComponent implements OnInit {
 
   constructor(
     protected formBuilder: FormBuilder,
-    protected movieService: MovieService
+    protected movieService: MovieService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +66,9 @@ export class EnterComponent implements OnInit {
       this.validateErrorMessages(this.movieForm);
       return;
     }
+    const movie: FavouriteMovie = Object.assign(this.movieForm.getRawValue());
+    localStorage.setItem('favouriteMovie', JSON.stringify(movie));
+    this.router.navigate(['thank-you']);
   }
 
   validateErrorMessages(form: FormGroup) {
@@ -81,6 +87,7 @@ export class EnterComponent implements OnInit {
       }
     });
   }
+
   // SOLUTION FOR SETTING VALIDATIONS FOR POST CODE BY USING FUNCTION WHICH RETURNS OBJECT OF TYPE ValidatorFn
   // postCodeValidator(country: string): ValidatorFn {
   //   this.movieForm.get('postCode').clearValidators();
