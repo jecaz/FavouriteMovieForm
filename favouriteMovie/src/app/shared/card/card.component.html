@@ -1,8 +1,9 @@
 <div class="row justify-content-center">
   <div class="col-6">
-    <div class="card box-shadow mt-5">
+    <div class="card box-shadow mt-4">
       <div class="card-body">
         <h3 *ngIf="title" class="text-center my-2 fst-italic">
+          <i *ngIf="icon" class="{{ icon }} text-primary"></i>
           {{ title }}
         </h3>
         <hr />

@@ -1,8 +1,8 @@
 <ng-container *ngIf="favouriteMovie; else noSubmittedForm">
-  <div class="alert alert-success mt-3 w-50 m-auto" role="alert">
+  <div class="alert alert-success w-50 m-auto" role="alert">
     Form successfully submitted!
   </div>
-  <app-card [title]="'Thank you for submitting form'">
+  <app-card [title]="'Thank you for submitting form'" [icon]="'fas fa-film'">
     <div
       card-body
       class="input-group mb-3"

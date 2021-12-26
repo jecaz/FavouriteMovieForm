@@ -38,7 +38,7 @@ export class EnterComponent implements OnInit {
   ngOnInit(): void {
     this.getCountryDropdown();
     this.initForm();
-    this.getAutocopletedMovies();
+    this.getAutocompletedMovies();
   }
 
   initForm() {
@@ -109,7 +109,7 @@ export class EnterComponent implements OnInit {
   // }
 
   selectCountry() {
-    // EXAMPLE OF SETTING VALIDATATORS BY CALLING FUNCTION postCodeValidator
+    // EXAMPLE OF SETTING VALIDATATORS BY CALLING FUNCTION postCodeValidator(country: string)
     // this.movieForm.controls.postCode.setValidators(
     //   this.postCodeValidator(this.movieForm.get('country').value)
     // );
@@ -141,7 +141,7 @@ export class EnterComponent implements OnInit {
     ]);
   }
 
-  getAutocopletedMovies() {
+  getAutocompletedMovies() {
     this.movies$ = this.movieForm.controls.favouriteMovie.valueChanges.pipe(
       startWith(''),
       debounceTime(500),

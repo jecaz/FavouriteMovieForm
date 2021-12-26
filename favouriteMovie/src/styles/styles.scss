@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap/scss/forms/input-group";
+@import "./common/variables";
+@import "./common/mixins";
 
 @-webkit-keyframes fold-out {
   from {
@@ -18,16 +20,6 @@
   to {
     top: 0px;
   }
-}
-
-// variables
-$color-dark-grey: #666666;
-$error-message: #d8000c;
-
-@mixin box-shadow($x, $y, $a, $b, $color, $opacity) {
-  box-shadow: $x $y $a $b rgba($color, $opacity);
-  -moz-box-shadow: $x $y $a $b rgba($color, $opacity);
-  -webkit-box-shadow: $x $y $a $b rgba($color, $opacity);
 }
 
 .box-shadow {
