@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'enter',
     component: EnterComponent,
   },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'enter', pathMatch: 'full' },
 ];
 
 @NgModule({
