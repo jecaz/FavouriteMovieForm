@@ -61,7 +61,6 @@ describe('EnterComponent', () => {
   let fixture: ComponentFixture<EnterComponent>;
   let mockMovieService: MovieService;
   let router: Router;
-  let input: HTMLInputElement;
   let el: DebugElement;
 
   beforeEach(async () => {
