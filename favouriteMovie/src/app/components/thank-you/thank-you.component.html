@@ -1,24 +1,13 @@
-<ng-container *ngIf="favouriteMovie; else noSubmittedForm">
+<ng-container *ngIf="movieForm; else noSubmittedForm">
   <div class="alert alert-success w-50 m-auto" role="alert">
     Form successfully submitted!
   </div>
   <app-card [title]="'Thank you for submitting form'" [icon]="'fas fa-film'">
-    <div
+    <app-movie-form
       card-body
-      class="input-group mb-3"
-      *ngFor="let movie of favouriteMovie | keyvalue"
-    >
-      <span class="input-group-text d-inline-block w-25 text-start">{{
-        movieKyes[movie.key]
-      }}</span>
-      <input
-        disabled
-        [ngModel]="movie.value"
-        type="text"
-        class="form-control bg-light"
-        aria-label="Chosen movie values"
-      />
-    </div>
+      [movieForm]="movieForm"
+      [disabledClass]="'disabled'"
+    ></app-movie-form>
   </app-card>
 </ng-container>
 <ng-template #noSubmittedForm>

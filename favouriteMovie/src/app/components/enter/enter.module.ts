@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SelectModule } from '../../shared/select/select.module';
-import { ButtonModule } from '../../shared/button/button.module';
 import { CardModule } from '../../shared/card/card.module';
-import { InputModule } from '../../shared/input/input.module';
 import { EnterComponent } from './enter.component';
+import { MovieFormModule } from '../movie-form/movie-form.module';
 
 @NgModule({
   declarations: [EnterComponent],
@@ -14,9 +12,7 @@ import { EnterComponent } from './enter.component';
     FormsModule,
     ReactiveFormsModule,
     CardModule,
-    InputModule,
-    SelectModule,
-    ButtonModule,
+    MovieFormModule,
   ],
   providers: [],
   exports: [EnterComponent],

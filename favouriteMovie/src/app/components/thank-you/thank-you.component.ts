@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MOVIE_KEY } from '../../models/movie.enum';
 import { FavouriteMovie } from '../../models/favourite-movie.model';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-thank-you',
@@ -8,10 +8,22 @@ import { FavouriteMovie } from '../../models/favourite-movie.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThankYouComponent implements OnInit {
-  favouriteMovie: FavouriteMovie;
-  movieKyes = MOVIE_KEY;
+  movieForm: FormGroup;
 
   ngOnInit(): void {
-    this.favouriteMovie = JSON.parse(localStorage.getItem('favouriteMovie'));
+    this.initForm();
+    this.movieForm.patchValue(
+      JSON.parse(localStorage.getItem('favouriteMovie'))
+    );
+  }
+
+  initForm() {
+    this.movieForm = new FormGroup({
+      name: new FormControl(''),
+      username: new FormControl(''),
+      country: new FormControl(''),
+      postCode: new FormControl(''),
+      favouriteMovie: new FormControl(''),
+    });
   }
 }
