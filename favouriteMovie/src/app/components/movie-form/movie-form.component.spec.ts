@@ -91,14 +91,15 @@ describe('MovieFormComponent', () => {
     fixture.detectChanges();
     const submitBtn = el.query(By.css('app-button')).nativeElement;
     submitBtn.click();
-    expect(router.navigate).toHaveBeenCalledWith(['thank-you']);
+    expect(router.navigate).toHaveBeenCalledWith(['thankyou']);
   });
 
   it('should not submit form if it is invalid', () => {
     spyOn(router, 'navigate');
     component.movieForm = mockInvalidForm;
     fixture.detectChanges();
-    component.submitForm();
+    const submitBtn = el.query(By.css('app-button')).nativeElement;
+    submitBtn.click();
     expect(router.navigate).not.toHaveBeenCalled();
   });
 

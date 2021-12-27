@@ -55,7 +55,7 @@ export class MovieFormComponent implements OnInit {
     }
     const movie: FavouriteMovie = Object.assign(this.movieForm.getRawValue());
     localStorage.setItem('favouriteMovie', JSON.stringify(movie));
-    this.router.navigate(['thank-you']);
+    this.router.navigate(['thankyou']);
   }
 
   validateErrorMessages(form: FormGroup) {

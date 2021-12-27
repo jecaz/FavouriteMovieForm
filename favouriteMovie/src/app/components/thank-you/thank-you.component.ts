@@ -8,22 +8,14 @@ import { FormControl, FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThankYouComponent implements OnInit {
-  movieForm: FormGroup;
+  movieForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
-    this.initForm();
-    this.movieForm.patchValue(
-      JSON.parse(localStorage.getItem('favouriteMovie'))
+    const movie: FavouriteMovie = JSON.parse(
+      localStorage.getItem('favouriteMovie')
     );
-  }
-
-  initForm() {
-    this.movieForm = new FormGroup({
-      name: new FormControl(''),
-      username: new FormControl(''),
-      country: new FormControl(''),
-      postCode: new FormControl(''),
-      favouriteMovie: new FormControl(''),
-    });
+    for (let label in movie) {
+      this.movieForm.addControl(label, new FormControl(movie[label]));
+    }
   }
 }
