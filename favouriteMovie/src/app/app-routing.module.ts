@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'enter', pathMatch: 'full' },
   { path: 'enter', component: EnterComponent },
   {
-    path: 'thank-you',
+    path: 'thankyou',
     loadChildren: () =>
       import('./components/thank-you/thank-you.module').then(
         (m) => m.ThankYouModule
