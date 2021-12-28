@@ -1,8 +1,12 @@
 <form [formGroup]="movieForm" class="p-3">
-  <div class="mb-3 {{ formViewClass }}">
-    <label for="name" class="form-label">Name</label>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      for="name"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Name</label
+    >
     <app-input
-      [class.w-75]="readonly"
+      [class.border-none]="readonly"
       [control]="$any(movieForm.get('name'))"
       [controlName]="'name'"
     ></app-input>
@@ -16,10 +20,14 @@
       {{ "Required field, numbers not allowed" }}
     </span>
   </div>
-  <div class="mb-3 {{ formViewClass }}">
-    <label for="username" class="form-label">Username</label>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      for="username"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Username</label
+    >
     <app-input
-      [class.w-75]="readonly"
+      [class.border-none]="readonly"
       [control]="$any(movieForm.get('username'))"
       [controlName]="'username'"
     ></app-input>
@@ -30,17 +38,25 @@
       {{ "Email required" }}
     </span>
   </div>
-  <div class="my-3 {{ formViewClass }}">
-    <label for="country-select" class="form-label">{{
-      "Choose a country:"
-    }}</label>
+  <div class="my-3" [class.d-flex]="readonly">
+    <label
+      for="country-select"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >{{ "Choose a country" }}</label
+    >
     <app-select
-      [class.w-75]="readonly"
+      *ngIf="!readonly"
       [options]="countryDropdown"
       [control]="$any(movieForm.get('country'))"
       [controlName]="'country'"
       (change)="selectCountry()"
     ></app-select>
+    <app-input
+      *ngIf="readonly"
+      [class.border-none]="readonly"
+      [control]="$any(movieForm.get('country'))"
+      [controlName]="'poscountrytCode'"
+    ></app-input>
     <span
       *ngIf="movieForm.get('country').hasError('requiredError')"
       class="error-message"
@@ -48,10 +64,14 @@
       {{ "Required field" }}
     </span>
   </div>
-  <div class="mb-3 {{ formViewClass }}">
-    <label for="postCode" class="form-label">Post Code</label>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      for="postCode"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Post Code</label
+    >
     <app-input
-      [class.w-75]="readonly"
+      [class.border-none]="readonly"
       [control]="$any(movieForm.get('postCode'))"
       [controlName]="'postCode'"
     ></app-input>
@@ -77,10 +97,14 @@
       {{ "Required field" }}
     </span>
   </div>
-  <div class="mb-3 {{ formViewClass }}">
-    <label for="favouriteMovie" class="form-label">Favourite Movie</label>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      for="favouriteMovie"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Favourite Movie</label
+    >
     <app-input
-      [class.w-75]="readonly"
+      [class.border-none]="readonly"
       (keyup)="isAutocompleteOpen = false"
       [control]="$any(movieForm.get('favouriteMovie'))"
       [controlName]="'favourite movie'"

@@ -39,3 +39,17 @@
 .pointer {
   cursor: pointer;
 }
+
+.form-control,
+.form-select {
+  &:disabled {
+    background-color: $basic-color;
+  }
+}
+
+.border-none {
+  input,
+  select {
+    border: none;
+  }
+}
