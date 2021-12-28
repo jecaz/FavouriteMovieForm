@@ -110,11 +110,6 @@ describe('MovieFormComponent', () => {
     expect(
       component.movieForm.controls.postCode.updateValueAndValidity
     ).toHaveBeenCalled();
-    mockValidForm.controls.country = new FormControl('Unitet Kingdom');
-    component.selectCountry();
-    expect(
-      component.movieForm.controls.postCode.updateValueAndValidity
-    ).toHaveBeenCalled();
   });
 
   it('should select movie', () => {

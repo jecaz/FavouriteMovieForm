@@ -25,7 +25,7 @@ import { FavouriteMovie } from '../../models/favourite-movie.model';
 })
 export class MovieFormComponent implements OnInit {
   @Input() movieForm: FormGroup;
-  @Input() disabledClass: string;
+  @Input() readonly: boolean;
   countryDropdown: DropdownMenu[];
   movies$: Observable<Movie[]>;
   isAutocompleteOpen: boolean;
@@ -34,9 +34,7 @@ export class MovieFormComponent implements OnInit {
   constructor(protected movieService: MovieService, protected router: Router) {}
 
   ngOnInit(): void {
-    this.formViewClass = this.disabledClass
-      ? 'd-flex justify-content-between'
-      : '';
+    this.formViewClass = this.readonly ? 'd-flex justify-content-between' : '';
     this.getCountryDropdown();
     this.getAutocompletedMovies();
   }
@@ -49,6 +47,7 @@ export class MovieFormComponent implements OnInit {
   }
 
   submitForm() {
+    console.log(this.movieForm, 'movieForm');
     if (!this.movieForm.valid) {
       this.validateErrorMessages(this.movieForm);
       return;

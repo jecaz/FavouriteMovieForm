@@ -2,8 +2,7 @@
   <div class="mb-3 {{ formViewClass }}">
     <label for="name" class="form-label">Name</label>
     <app-input
-      class="{{ disabledClass }}"
-      [class.w-75]="disabledClass"
+      [class.w-75]="readonly"
       [control]="$any(movieForm.get('name'))"
       [controlName]="'name'"
     ></app-input>
@@ -20,8 +19,7 @@
   <div class="mb-3 {{ formViewClass }}">
     <label for="username" class="form-label">Username</label>
     <app-input
-      class="{{ disabledClass }}"
-      [class.w-75]="disabledClass"
+      [class.w-75]="readonly"
       [control]="$any(movieForm.get('username'))"
       [controlName]="'username'"
     ></app-input>
@@ -37,8 +35,7 @@
       "Choose a country:"
     }}</label>
     <app-select
-      class="{{ disabledClass }}"
-      [class.w-75]="disabledClass"
+      [class.w-75]="readonly"
       [options]="countryDropdown"
       [control]="$any(movieForm.get('country'))"
       [controlName]="'country'"
@@ -54,8 +51,7 @@
   <div class="mb-3 {{ formViewClass }}">
     <label for="postCode" class="form-label">Post Code</label>
     <app-input
-      class="{{ disabledClass }}"
-      [class.w-75]="disabledClass"
+      [class.w-75]="readonly"
       [control]="$any(movieForm.get('postCode'))"
       [controlName]="'postCode'"
     ></app-input>
@@ -84,8 +80,7 @@
   <div class="mb-3 {{ formViewClass }}">
     <label for="favouriteMovie" class="form-label">Favourite Movie</label>
     <app-input
-      class="{{ disabledClass }}"
-      [class.w-75]="disabledClass"
+      [class.w-75]="readonly"
       (keyup)="isAutocompleteOpen = false"
       [control]="$any(movieForm.get('favouriteMovie'))"
       [controlName]="'favourite movie'"
@@ -102,7 +97,7 @@
       </ul>
     </ng-container>
   </div>
-  <div *ngIf="!disabledClass" class="d-flex justify-content-end">
+  <div *ngIf="!readonly" class="d-flex justify-content-end">
     <app-button [label]="'Submit'" (click)="submitForm()"></app-button>
   </div>
 </form>

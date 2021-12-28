@@ -15,7 +15,10 @@ export class ThankYouComponent implements OnInit {
       localStorage.getItem('favouriteMovie')
     );
     for (let label in movie) {
-      this.movieForm.addControl(label, new FormControl(movie[label]));
+      this.movieForm.addControl(
+        label,
+        new FormControl({ value: movie[label], disabled: true })
+      );
     }
   }
 }
