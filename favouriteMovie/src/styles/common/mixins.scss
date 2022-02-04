@@ -5,3 +5,7 @@
   -moz-box-shadow: $x $y $a $b rgba($color, $opacity);
   -webkit-box-shadow: $x $y $a $b rgba($color, $opacity);
 }
+
+@mixin bg-color-transparent($color, $opacity) {
+  background-color: rgba($color, $opacity);
+}

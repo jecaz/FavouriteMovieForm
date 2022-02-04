@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   template: `<input
     [formControl]="formControl"
-    [type]="'text'"
+    type="text"
     class="form-control"
     id="{{ controlName }}"
     placeholder="{{ 'Enter your ' + controlName + '...' }}"
@@ -13,9 +13,9 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  @Input() set control(value: FormControl) {
+  @Input() set control(value: AbstractControl) {
     if (this.formControl !== value) {
-      this.formControl = value;
+      this.formControl = value as FormControl;
     }
   }
   @Input() type: string;

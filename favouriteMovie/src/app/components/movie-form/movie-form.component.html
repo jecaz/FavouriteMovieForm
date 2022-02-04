@@ -1,13 +1,14 @@
 <form [formGroup]="movieForm" class="p-3">
   <div class="mb-3" [class.d-flex]="readonly">
     <label
+      class="text-light"
       for="name"
       [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
       >Name</label
     >
     <app-input
       [class.border-none]="readonly"
-      [control]="$any(movieForm.get('name'))"
+      [control]="movieForm.controls.name"
       [controlName]="'name'"
     ></app-input>
     <span
@@ -22,13 +23,14 @@
   </div>
   <div class="mb-3" [class.d-flex]="readonly">
     <label
+      class="text-light"
       for="username"
       [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
       >Username</label
     >
     <app-input
       [class.border-none]="readonly"
-      [control]="$any(movieForm.get('username'))"
+      [control]="movieForm.get('username')"
       [controlName]="'username'"
     ></app-input>
     <span
@@ -40,6 +42,7 @@
   </div>
   <div class="my-3" [class.d-flex]="readonly">
     <label
+      class="text-light"
       for="country-select"
       [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
       >{{ "Choose a country" }}</label
@@ -47,14 +50,14 @@
     <app-select
       *ngIf="!readonly"
       [options]="countryDropdown"
-      [control]="$any(movieForm.get('country'))"
+      [control]="movieForm.get('country')"
       [controlName]="'country'"
       (change)="selectCountry()"
     ></app-select>
     <app-input
       *ngIf="readonly"
       [class.border-none]="readonly"
-      [control]="$any(movieForm.get('country'))"
+      [control]="movieForm.get('country')"
       [controlName]="'poscountrytCode'"
     ></app-input>
     <span
@@ -66,13 +69,14 @@
   </div>
   <div class="mb-3" [class.d-flex]="readonly">
     <label
+      class="text-light"
       for="postCode"
       [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
       >Post Code</label
     >
     <app-input
       [class.border-none]="readonly"
-      [control]="$any(movieForm.get('postCode'))"
+      [control]="movieForm.get('postCode')"
       [controlName]="'postCode'"
     ></app-input>
     <span
@@ -99,6 +103,7 @@
   </div>
   <div class="mb-3" [class.d-flex]="readonly">
     <label
+      class="text-light"
       for="favouriteMovie"
       [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
       >Favourite Movie</label
@@ -106,7 +111,7 @@
     <app-input
       [class.border-none]="readonly"
       (keyup)="isAutocompleteOpen = false"
-      [control]="$any(movieForm.get('favouriteMovie'))"
+      [control]="movieForm.get('favouriteMovie')"
       [controlName]="'favourite movie'"
     ></app-input>
     <ng-container *ngIf="!isAutocompleteOpen && movies$ | async as movies">

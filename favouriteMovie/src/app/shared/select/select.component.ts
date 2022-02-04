@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { DropdownMenu } from 'src/app/models/dropdown.model';
 
 @Component({
@@ -17,16 +17,13 @@ import { DropdownMenu } from 'src/app/models/dropdown.model';
     </option>
   </select>`,
 })
-export class SelectComponent implements OnInit {
-  @Input() set control(value: FormControl) {
+export class SelectComponent {
+  @Input() set control(value: AbstractControl) {
     if (this.formControl !== value) {
-      this.formControl = value;
+      this.formControl = value as FormControl;
     }
   }
   @Input() options: DropdownMenu[];
   @Input() controlName: string;
   formControl: FormControl;
-  constructor() {}
-
-  ngOnInit(): void {}
 }

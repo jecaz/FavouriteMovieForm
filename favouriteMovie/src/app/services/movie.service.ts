@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Movie } from '../models/movie.model';
@@ -10,6 +10,8 @@ import { Movie } from '../models/movie.model';
 })
 export class MovieService {
   private API_URL = environment.baseUrl;
+  private readonly activLinkSource = new BehaviorSubject<string>(null);
+  readonly activLink$ = this.activLinkSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -20,5 +22,9 @@ export class MovieService {
         map((response) => response['Search']),
         catchError((error) => throwError(error))
       );
+  }
+
+  setActivLink(string): void {
+    this.activLinkSource.next(string);
   }
 }

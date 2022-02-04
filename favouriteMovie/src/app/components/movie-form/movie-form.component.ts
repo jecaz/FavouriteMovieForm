@@ -4,7 +4,13 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
@@ -50,7 +56,8 @@ export class MovieFormComponent implements OnInit {
       return;
     }
     const movie: FavouriteMovie = Object.assign(this.movieForm.getRawValue());
-    localStorage.setItem('favouriteMovie', JSON.stringify(movie));
+    sessionStorage.setItem('favouriteMovie', JSON.stringify(movie));
+    this.movieService.setActivLink('thankyou');
     this.router.navigate(['thankyou']);
   }
 
@@ -102,10 +109,7 @@ export class MovieFormComponent implements OnInit {
     } else {
       this.setPostCodeValidatorsUK();
     }
-    this.movieForm.controls.postCode.updateValueAndValidity({
-      emitEvent: false,
-      onlySelf: true,
-    });
+    this.movieForm.controls.postCode.updateValueAndValidity();
   }
 
   private setPostCodeValidatorsIRL() {

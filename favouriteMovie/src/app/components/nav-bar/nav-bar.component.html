@@ -1,16 +1,21 @@
-<nav class="navbar navbar-light alert alert-primary position-fixed w-100">
+<nav class="navbar bg-navbar position-fixed w-100">
   <ul class="navbar-nav mr-auto" style="flex-direction: row">
     <li class="nav-item px-2">
       <a
-        class="nav-link"
-        routerLink="/enter"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link pointer"
+        (click)="navigateToPage('enter')"
+        [ngClass]="activLink === 'enter' ? 'active' : 'text-light'"
+        [class.active]="activLink === 'enter'"
         >Favourite Movie</a
       >
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/thankyou">Thank you</a>
+      <a
+        class="nav-link pointer"
+        (click)="navigateToPage('thankyou')"
+        [ngClass]="activLink === 'thankyou' ? 'active' : 'text-light'"
+        >Thank you</a
+      >
     </li>
   </ul>
 </nav>
