@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonModule } from '../../shared/button/button.module';
 import { CardModule } from '../../shared/card/card.module';
-import { LoadingModule } from '../loading/loading.module';
 import { MovieFormModule } from '../movie-form/movie-form.module';
 import { ThankYouComponent } from './thank-you.component';
 import { MovieDetailsModule } from '../movie-details/movie-details.module';
+import { LoadingModule } from '../../shared/loading/loading.module';
 
 const routes: Routes = [
   {

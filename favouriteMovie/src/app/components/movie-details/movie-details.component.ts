@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { Movie } from 'src/app/models/movie.model';
+import { Movie } from '../../models/movie.model';
 
 @Component({
   selector: 'app-movie-details',

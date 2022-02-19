@@ -51,6 +51,5 @@ export class ThankYouComponent implements OnInit {
       );
     this.loadedMovieDetails$ =
       this.loadingService.showLoaderUntilCompleted(movieDetails$);
-    // this.loadedMovieDetails$.subscribe((movie) => console.log(movie));
   }
 }
