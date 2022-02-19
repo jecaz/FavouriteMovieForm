@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  filter,
   startWith,
   switchMap,
 } from 'rxjs/operators';
@@ -130,9 +131,10 @@ export class MovieFormComponent implements OnInit {
 
   getAutocompletedMovies() {
     this.movies$ = this.movieForm.controls.favouriteMovie.valueChanges.pipe(
-      startWith(''),
+      // startWith(''),
       debounceTime(500),
       distinctUntilChanged(),
+      filter((searchValue) => !!searchValue),
       switchMap((searchValue: string) => {
         return this.movieService.getMoviesByTitle('movie', searchValue);
       })

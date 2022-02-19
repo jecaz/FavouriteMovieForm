@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   environmentName: 'localhost',
-  baseUrl: 'http://www.omdbapi.com/?i=tt3896198&apikey=451d207d',
+  baseUrl: 'http://www.omdbapi.com/?apikey=451d207d',
 };
 
 /*

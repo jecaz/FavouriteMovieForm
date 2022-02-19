@@ -6,6 +6,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { EnterModule } from './components/enter/enter.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ThankYouModule } from './components/thank-you/thank-you.module';
+import { LoadingModule } from './components/loading/loading.module';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
@@ -15,6 +16,7 @@ import { ThankYouModule } from './components/thank-you/thank-you.module';
     AppRoutingModule,
     EnterModule,
     ThankYouModule,
+    LoadingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

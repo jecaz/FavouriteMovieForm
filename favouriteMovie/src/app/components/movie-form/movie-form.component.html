@@ -7,7 +7,7 @@
       >Name</label
     >
     <app-input
-      [class.border-none]="readonly"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
       [control]="movieForm.controls.name"
       [controlName]="'name'"
     ></app-input>
@@ -29,7 +29,7 @@
       >Username</label
     >
     <app-input
-      [class.border-none]="readonly"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
       [control]="movieForm.get('username')"
       [controlName]="'username'"
     ></app-input>
@@ -49,6 +49,7 @@
     >
     <app-select
       *ngIf="!readonly"
+      [ngClass]="readonly ? 'w-50' : ''"
       [options]="countryDropdown"
       [control]="movieForm.get('country')"
       [controlName]="'country'"
@@ -56,7 +57,7 @@
     ></app-select>
     <app-input
       *ngIf="readonly"
-      [class.border-none]="readonly"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
       [control]="movieForm.get('country')"
       [controlName]="'poscountrytCode'"
     ></app-input>
@@ -75,7 +76,7 @@
       >Post Code</label
     >
     <app-input
-      [class.border-none]="readonly"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
       [control]="movieForm.get('postCode')"
       [controlName]="'postCode'"
     ></app-input>
@@ -109,7 +110,7 @@
       >Favourite Movie</label
     >
     <app-input
-      [class.border-none]="readonly"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
       (keyup)="isAutocompleteOpen = false"
       [control]="movieForm.get('favouriteMovie')"
       [controlName]="'favourite movie'"

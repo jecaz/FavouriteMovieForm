@@ -1,12 +1,34 @@
+<loading></loading>
 <ng-container *ngIf="movieForm; else noSubmittedForm">
-  <div class="alert bg-info" role="alert">Form successfully submitted!</div>
-  <app-card [title]="'Thank you for submitting form'" [icon]="'fas fa-film'">
-    <app-movie-form
-      card-body
-      [movieForm]="movieForm"
-      [readonly]="true"
-    ></app-movie-form>
-  </app-card>
+  <div class="row">
+    <div class="col-6">
+      <div class="alert bg-info" role="alert">Form successfully submitted!</div>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-6">
+      <app-card
+        [title]="'Thank you for submitting form'"
+        [icon]="'fas fa-film'"
+      >
+        <app-movie-form
+          card-body
+          [movieForm]="movieForm"
+          [readonly]="true"
+        ></app-movie-form>
+        <div card-body class="row me-3 text-end">
+          <div class="offset-7 col-5 p-0">
+            <app-button
+              (click)="showMovieDetails()"
+              [label]="'Movie details'"
+            ></app-button>
+          </div>
+        </div>
+      </app-card>
+    </div>
+    <div *ngIf="loadedMovieDetails$ | async as movie" class="col-6">
+      <app-movie-details [movie]="movie"></app-movie-details>
+    </div>
+  </div>
 </ng-container>
 <ng-template #noSubmittedForm>
   <div class="alert alert-primary mt-5" role="alert">

@@ -17,6 +17,7 @@ export class EnterComponent implements OnInit {
   constructor(protected formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
+    sessionStorage.removeItem('selectedRating');
     this.initForm();
   }
 
