@@ -53,6 +53,7 @@ export class MovieFormComponent implements OnInit {
 
   submitForm() {
     if (!this.movieForm.valid) {
+      // this.movieForm.markAllAsTouched();
       this.validateErrorMessages(this.movieForm);
       return;
     }

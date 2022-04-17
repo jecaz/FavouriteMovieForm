@@ -8,7 +8,7 @@
     >
     <app-input
       [ngClass]="readonly ? 'border-none w-50' : ''"
-      [control]="movieForm.controls.name"
+      formControlName="name"
       [controlName]="'name'"
     ></app-input>
     <span
@@ -30,7 +30,7 @@
     >
     <app-input
       [ngClass]="readonly ? 'border-none w-50' : ''"
-      [control]="movieForm.get('username')"
+      formControlName="username"
       [controlName]="'username'"
     ></app-input>
     <span
@@ -58,7 +58,7 @@
     <app-input
       *ngIf="readonly"
       [ngClass]="readonly ? 'border-none w-50' : ''"
-      [control]="movieForm.get('country')"
+      formControlName="country"
       [controlName]="'poscountrytCode'"
     ></app-input>
     <span
@@ -77,7 +77,7 @@
     >
     <app-input
       [ngClass]="readonly ? 'border-none w-50' : ''"
-      [control]="movieForm.get('postCode')"
+      formControlName="postCode"
       [controlName]="'postCode'"
     ></app-input>
     <span
@@ -112,7 +112,7 @@
     <app-input
       [ngClass]="readonly ? 'border-none w-50' : ''"
       (keyup)="isAutocompleteOpen = false"
-      [control]="movieForm.get('favouriteMovie')"
+      formControlName="favouriteMovie"
       [controlName]="'favourite movie'"
     ></app-input>
     <ng-container *ngIf="!isAutocompleteOpen && movies$ | async as movies">
