@@ -5,31 +5,22 @@
     </div>
     <div class="col-6"></div>
     <div class="col-6">
-      <app-card
-        [title]="'Thank you for submitting form'"
-        [icon]="'fas fa-film'"
-      >
-        <app-movie-form
-          card-body
-          [movieForm]="movieForm"
-          [readonly]="true"
-        ></app-movie-form>
+      <app-card [title]="'Thank you for submitting form'" [icon]="'fas fa-film'">
+        <app-movie-form card-body [movieForm]="movieForm" [readonly]="true"></app-movie-form>
         <div card-body class="row me-3 text-end">
           <div class="offset-7 col-5 p-0">
-            <app-button
-              (click)="showMovieDetails()"
-              [label]="'Movie details'"
-            ></app-button>
+            <app-button (click)="showMovieDetails()" [label]="'Movie details'"></app-button>
           </div>
         </div>
       </app-card>
     </div>
     <div class="col-6 position-relative">
-      <loading></loading>
-      <app-movie-details
-        *ngIf="loadedMovieDetails$ | async as movie"
-        [movie]="movie"
-      ></app-movie-details>
+      <ng-container *ngIf="showDetails">
+        <ng-container *ngIf="movieDetails$ | async as movieState">
+          <app-movie-details *spinner="movieState.isLoading" [movie]="movieState.value">
+          </app-movie-details>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 </ng-container>

@@ -3,7 +3,7 @@ import { FavouriteMovie } from '../../models/favourite-movie.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MovieService } from '../../services/movie.service';
 import { Observable } from 'rxjs';
-import { Movie } from '../../models/movie.model';
+import { HttpRequestState, Movie } from '../../models/movie.model';
 import { switchMap } from 'rxjs/operators';
 import { LoadingService } from '../../services/loading.service';
 
@@ -15,11 +15,12 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class ThankYouComponent implements OnInit {
   movieForm: FormGroup;
-  loadedMovieDetails$: Observable<Movie>;
+  movieDetails$: Observable<HttpRequestState<Movie>>;
+  showDetails = false;
 
   constructor(
     protected movieService: MovieService,
-    protected loadingService: LoadingService
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +28,6 @@ export class ThankYouComponent implements OnInit {
       sessionStorage.getItem('favouriteMovie')
     );
     if (movie) {
-      console.log(movie);
       this.movieForm = new FormGroup({});
       for (let label in movie) {
         this.movieForm.addControl(
@@ -36,20 +36,23 @@ export class ThankYouComponent implements OnInit {
         );
       }
     }
+    this.movieDetails$ = this.getMovieByTitle(this.movieForm.controls.favouriteMovie.value);
   }
 
   showMovieDetails() {
     if (!this.movieForm.controls.favouriteMovie.value) {
       return;
     }
-    const movieDetails$: Observable<Movie> = this.movieService
-      .getMoviesByTitle('movie', this.movieForm.controls.favouriteMovie.value)
+    this.showDetails = true;
+    // this.movieDetails$ =
+    //   this.loadingService.showLoaderUntilCompleted(this.getMovieByTitle(this.movieForm.controls.favouriteMovie.value));
+  }
+
+  getMovieByTitle(title: string): Observable<HttpRequestState<Movie>> {
+    return this.movieService
+      .getMoviesByTitle('movie', title)
       .pipe(
-        switchMap((movies: Movie[]) => {
-          return this.movieService.getMovieById(movies[0].imdbID);
-        })
+        switchMap((movies: Movie[]) =>this.movieService.getMovieById(movies[0].imdbID)),
       );
-    this.loadedMovieDetails$ =
-      this.loadingService.showLoaderUntilCompleted(movieDetails$);
   }
 }

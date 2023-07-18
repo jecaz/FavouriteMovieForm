@@ -3,17 +3,18 @@
     <li class="nav-item px-2">
       <a
         class="nav-link pointer"
-        (click)="navigateToPage('enter')"
-        [ngClass]="activLink === 'enter' ? 'active' : 'text-light'"
-        [class.active]="activLink === 'enter'"
+        [routerLink]="'/enter'"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact: true}"
         >Favourite Movie</a
       >
     </li>
     <li class="nav-item">
       <a
         class="nav-link pointer"
-        (click)="navigateToPage('thankyou')"
-        [ngClass]="activLink === 'thankyou' ? 'active' : 'text-light'"
+        [routerLink]="'/thankyou'"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact: true}"
         >Thank you</a
       >
     </li>

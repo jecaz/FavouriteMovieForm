@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Movie } from '../../models/movie.model';
 
 @Component({
@@ -12,13 +7,9 @@ import { Movie } from '../../models/movie.model';
   styleUrls: ['./movie-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieDetailsComponent implements OnInit {
+export class MovieDetailsComponent {
   @Input() movie: Movie;
   starRatingVisible = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   toggleStarRating() {
     this.starRatingVisible = !this.starRatingVisible;

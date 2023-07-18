@@ -80,8 +80,8 @@ body {
   @include bg-color-transparent(black, 0.5);
 }
 
-.active {
-  color: $color-third;
+.active-link {
+  color: $active !important;
 }
 
 .navbar {
@@ -91,8 +91,12 @@ body {
 }
 
 .nav-item {
-  .nav-link:hover {
+  .nav-link {
     color: $basic-color;
+  }
+
+  .nav-link:hover {
+    color: $color-primary;
   }
 }
 

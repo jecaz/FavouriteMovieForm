@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, map, startWith } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Movie } from '../models/movie.model';
+import { HttpRequestState, Movie } from '../models/movie.model';
 import { MessageService } from './messages.service';
 
 @Injectable({
@@ -32,14 +32,17 @@ export class MovieService {
       );
   }
 
-  getMovieById(movieId: string): Observable<Movie> {
+  getMovieById(movieId: string): Observable<HttpRequestState<Movie>> {
     return this.http.get<Movie>(`${this.API_URL}&i=${movieId}`).pipe(
+      map((value) => ({ isLoading: false, value })),
       catchError((error) => {
         const message = 'Something went wrong. Movie not found!';
         this.messagesService.showErrors(message);
         console.log(error);
-        return throwError(error);
-      })
+        // return throwError(error);
+        return of({ isLoading: false, error });
+      }),
+      startWith({ isLoading: true }),
     );
   }
 

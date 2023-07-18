@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -7,10 +7,5 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./../../../styles/loading/loading.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoadingComponent implements OnInit {
-  loading$ = this.loadingService.loading$;
-
-  constructor(private loadingService: LoadingService) {}
-
-  ngOnInit(): void {}
+export class LoadingComponent {
 }

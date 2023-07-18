@@ -8,6 +8,7 @@ import { MovieFormModule } from '../movie-form/movie-form.module';
 import { ThankYouComponent } from './thank-you.component';
 import { MovieDetailsModule } from '../movie-details/movie-details.module';
 import { LoadingModule } from '../../shared/loading/loading.module';
+import { SpinnerModule } from 'src/app/shared/directives/spinner.module';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     ButtonModule,
     LoadingModule,
     MovieDetailsModule,
+    SpinnerModule,
   ],
   exports: [ThankYouComponent],
 })
