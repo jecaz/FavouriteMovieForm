@@ -4,40 +4,36 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   filter,
-  startWith,
   switchMap,
+  takeUntil,
 } from 'rxjs/operators';
 import { MovieService } from '../../services/movie.service';
 import { DropdownMenu } from '../../models/dropdown.model';
 import { Movie } from '../../models/movie.model';
 import { FavouriteMovie } from '../../models/favourite-movie.model';
+import { Unsubscribe } from '../../shared/utils/unsubscribe';
 
 @Component({
   selector: 'app-movie-form',
   templateUrl: './movie-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieFormComponent implements OnInit {
+export class MovieFormComponent extends Unsubscribe implements OnInit {
   @Input() movieForm: FormGroup;
   @Input() readonly: boolean;
   countryDropdown: DropdownMenu[];
   movies$: Observable<Movie[]>;
-  isAutocompleteOpen: boolean;
 
-  constructor(protected movieService: MovieService, protected router: Router) {}
+  constructor(protected movieService: MovieService, protected router: Router) {
+    super();
+  }
 
   ngOnInit(): void {
     this.getCountryDropdown();
@@ -53,32 +49,30 @@ export class MovieFormComponent implements OnInit {
 
   submitForm() {
     if (!this.movieForm.valid) {
-      // this.movieForm.markAllAsTouched();
-      this.validateErrorMessages(this.movieForm);
+      this.movieForm.markAllAsTouched();
       return;
     }
     const movie: FavouriteMovie = Object.assign(this.movieForm.getRawValue());
     sessionStorage.setItem('favouriteMovie', JSON.stringify(movie));
-    this.movieService.setActivLink('thankyou');
     this.router.navigate(['thankyou']);
   }
 
-  validateErrorMessages(form: FormGroup) {
-    Object.keys(form.controls).forEach((name) => {
-      const control = form.controls[name].errors;
-      if (control && control.required) {
-        form.controls[name].setErrors({ requiredError: true });
-      } else if (control && control.email) {
-        form.controls[name].setErrors({ emailError: true });
-      } else if (control && control.pattern) {
-        form.controls[name].setErrors({ patternError: true });
-      } else if (control && control.minlength) {
-        form.controls[name].setErrors({ minLengthError: true });
-      } else if (control && control.maxlength) {
-        form.controls[name].setErrors({ maxLengthError: true });
-      }
-    });
-  }
+  // validateErrorMessages(form: FormGroup) {
+  // Object.keys(form.controls).forEach((name) => {
+  //   const control = form.controls[name].errors;
+  //   if (control && control.required) {
+  //     form.controls[name].setErrors({ requiredError: true });
+  //   } else if (control && control.email) {
+  //     form.controls[name].setErrors({ emailError: true });
+  //   } else if (control && control.pattern) {
+  //     form.controls[name].setErrors({ patternError: true });
+  //   } else if (control && control.minlength) {
+  //     form.controls[name].setErrors({ minLengthError: true });
+  //   } else if (control && control.maxlength) {
+  //     form.controls[name].setErrors({ maxLengthError: true });
+  //   }
+  // });
+  // }
 
   // SOLUTION FOR SETTING VALIDATIONS FOR POST CODE BY USING FUNCTION WHICH RETURNS OBJECT OF TYPE ValidatorFn
   // postCodeValidator(country: string): ValidatorFn {
@@ -132,18 +126,16 @@ export class MovieFormComponent implements OnInit {
 
   getAutocompletedMovies() {
     this.movies$ = this.movieForm.controls.favouriteMovie.valueChanges.pipe(
-      // startWith(''),
       debounceTime(500),
       distinctUntilChanged(),
       filter((searchValue) => !!searchValue),
-      switchMap((searchValue: string) => {
-        return this.movieService.getMoviesByTitle('movie', searchValue);
-      })
+      takeUntil(this.destroy$),
+      switchMap((searchValue: string) => this.movieService.getMoviesByTitle('movie', searchValue))
     );
   }
 
   selectMovie(movieTitle: string) {
-    this.isAutocompleteOpen = true;
     this.movieForm.controls.favouriteMovie.setValue(movieTitle);
+    this.movieForm.controls.favouriteMovie.updateValueAndValidity();
   }
 }

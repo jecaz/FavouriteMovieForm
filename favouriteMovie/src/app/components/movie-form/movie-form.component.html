@@ -7,18 +7,21 @@
       >Name</label
     >
     <app-input
+      #name
+      [valueAccessor]="name"
       [ngClass]="readonly ? 'border-none w-50' : ''"
       formControlName="name"
       [controlName]="'name'"
     ></app-input>
     <span
       class="error-message"
-      *ngIf="
-        movieForm.get('name').hasError('requiredError') ||
-        movieForm.get('name').hasError('patternError')
-      "
-    >
-      {{ "Required field, numbers not allowed" }}
+      *ngIf="movieForm.get('name').touched && movieForm.get('name').hasError('required')">
+      {{ "Required field" }}
+    </span>
+    <span
+      class="error-message"
+      *ngIf="movieForm.get('name').hasError('pattern')">
+      {{ "Numbers not allowed" }}
     </span>
   </div>
   <div class="mb-3" [class.d-flex]="readonly">
@@ -29,12 +32,14 @@
       >Username</label
     >
     <app-input
+      #username
+      [valueAccessor]="username"
       [ngClass]="readonly ? 'border-none w-50' : ''"
       formControlName="username"
       [controlName]="'username'"
     ></app-input>
     <span
-      *ngIf="movieForm.get('username').hasError('emailError')"
+      *ngIf="movieForm.get('username').hasError('email')"
       class="error-message"
     >
       {{ "Email required" }}
@@ -49,20 +54,24 @@
     >
     <app-select
       *ngIf="!readonly"
+      #country
+      [valueAccessor]="country"
       [ngClass]="readonly ? 'w-50' : ''"
       [options]="countryDropdown"
-      [control]="movieForm.get('country')"
+      formControlName="country"
       [controlName]="'country'"
       (change)="selectCountry()"
     ></app-select>
     <app-input
+      #postCode
+      [valueAccessor]="postCode"
       *ngIf="readonly"
       [ngClass]="readonly ? 'border-none w-50' : ''"
-      formControlName="country"
-      [controlName]="'poscountrytCode'"
+      formControlName="postCode"
+      [controlName]="'postCode'"
     ></app-input>
     <span
-      *ngIf="movieForm.get('country').hasError('requiredError')"
+      *ngIf="movieForm.get('country').touched && movieForm.get('country').hasError('required')"
       class="error-message"
     >
       {{ "Required field" }}
@@ -76,27 +85,29 @@
       >Post Code</label
     >
     <app-input
+      #postCode
+      [valueAccessor]="postCode"
       [ngClass]="readonly ? 'border-none w-50' : ''"
       formControlName="postCode"
       [controlName]="'postCode'"
     ></app-input>
     <span
       *ngIf="
-        movieForm.get('postCode').hasError('minLengthError') ||
-        movieForm.get('postCode').hasError('maxLengthError')
+        movieForm.get('postCode').hasError('minlength') ||
+        movieForm.get('postCode').hasError('maxlength')
       "
       class="error-message"
     >
       {{ "Required 6-10 characters" }}
     </span>
     <span
-      *ngIf="movieForm.get('postCode').hasError('patternError')"
+      *ngIf="movieForm.get('postCode').dirty && movieForm.get('postCode').hasError('pattern')"
       class="error-message"
     >
       {{ "Wrong post code format" }}
     </span>
     <span
-      *ngIf="movieForm.get('postCode').hasError('requiredError')"
+      *ngIf="movieForm.get('country').touched && movieForm.get('postCode').hasError('required')"
       class="error-message"
     >
       {{ "Required field" }}
@@ -110,12 +121,13 @@
       >Favourite Movie</label
     >
     <app-input
+      #favouriteMovie
+      [valueAccessor]="favouriteMovie"
       [ngClass]="readonly ? 'border-none w-50' : ''"
-      (keyup)="isAutocompleteOpen = false"
       formControlName="favouriteMovie"
       [controlName]="'favourite movie'"
     ></app-input>
-    <ng-container *ngIf="!isAutocompleteOpen && movies$ | async as movies">
+    <ng-container *ngIf="movieForm.controls.favouriteMovie.value && movies$ | async as movies">
       <ul class="list-group position-absolute w-75 border-bottom">
         <li
           class="list-group-item bg-light text-dark pointer"

@@ -6,6 +6,7 @@ import { ButtonModule } from '../../shared/button/button.module';
 import { CardModule } from '../../shared/card/card.module';
 import { InputModule } from '../../shared/input/input.module';
 import { MovieFormComponent } from './movie-form.component';
+import { ValueAccessorModule } from '../../shared/directives/value-accessor.module';
 
 @NgModule({
   declarations: [MovieFormComponent],
@@ -17,6 +18,7 @@ import { MovieFormComponent } from './movie-form.component';
     InputModule,
     SelectModule,
     ButtonModule,
+    ValueAccessorModule
   ],
   providers: [],
   exports: [MovieFormComponent],

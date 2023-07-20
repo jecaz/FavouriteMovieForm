@@ -11,8 +11,6 @@ import { MessageService } from './messages.service';
 })
 export class MovieService {
   private API_URL = environment.baseUrl;
-  private readonly activLinkSource = new BehaviorSubject<string>(null);
-  readonly activLink$ = this.activLinkSource.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -26,7 +24,6 @@ export class MovieService {
         map((response) => response['Search']),
         catchError((error) => {
           this.messagesService.showErrors(error.error.Error);
-          console.log(error);
           return throwError(error);
         })
       );
@@ -38,15 +35,10 @@ export class MovieService {
       catchError((error) => {
         const message = 'Something went wrong. Movie not found!';
         this.messagesService.showErrors(message);
-        console.log(error);
         // return throwError(error);
         return of({ isLoading: false, error });
       }),
       startWith({ isLoading: true }),
     );
-  }
-
-  setActivLink(string): void {
-    this.activLinkSource.next(string);
   }
 }
