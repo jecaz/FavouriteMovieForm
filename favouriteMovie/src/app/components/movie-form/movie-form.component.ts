@@ -30,6 +30,7 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
   @Input() readonly: boolean;
   countryDropdown: DropdownMenu[];
   movies$: Observable<Movie[]>;
+  isAutocompleteOpen = false;
 
   constructor(protected movieService: MovieService, protected router: Router) {
     super();
@@ -126,16 +127,16 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
 
   getAutocompletedMovies() {
     this.movies$ = this.movieForm.controls.favouriteMovie.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(300),
       distinctUntilChanged(),
-      filter((searchValue) => !!searchValue),
+      filter((searchValue) => !!searchValue && this.isAutocompleteOpen),
       takeUntil(this.destroy$),
       switchMap((searchValue: string) => this.movieService.getMoviesByTitle('movie', searchValue))
     );
   }
 
   selectMovie(movieTitle: string) {
+    this.isAutocompleteOpen = false;
     this.movieForm.controls.favouriteMovie.setValue(movieTitle);
-    this.movieForm.controls.favouriteMovie.updateValueAndValidity();
   }
 }

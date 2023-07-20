@@ -124,19 +124,20 @@
       #favouriteMovie
       [valueAccessor]="favouriteMovie"
       [ngClass]="readonly ? 'border-none w-50' : ''"
+      (keyup)="isAutocompleteOpen = true"
       formControlName="favouriteMovie"
       [controlName]="'favourite movie'"
     ></app-input>
-    <ng-container *ngIf="movieForm.controls.favouriteMovie.value && movies$ | async as movies">
-      <ul class="list-group position-absolute w-75 border-bottom">
-        <li
-          class="list-group-item bg-light text-dark pointer"
-          *ngFor="let movie of movies"
-          (click)="selectMovie(movie.Title)"
-        >
-          {{ movie.Title }}
-        </li>
-      </ul>
+    <ng-container *ngIf="isAutocompleteOpen && movies$ | async as movies">
+        <ul class="list-group position-absolute w-75 border-bottom">
+          <li
+            class="list-group-item bg-light text-dark pointer"
+            *ngFor="let movie of movies"
+            (click)="selectMovie(movie.Title)"
+          >
+            {{ movie.Title }}
+          </li>
+        </ul>
     </ng-container>
   </div>
   <div *ngIf="!readonly" class="d-flex justify-content-end">
