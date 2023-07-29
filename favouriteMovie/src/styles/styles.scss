@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap/scss/forms/input-group";
+@import "~bootstrap/scss/modal";
 @import "./common/variables";
 @import "./common/mixins";
 
@@ -30,6 +31,16 @@ body {
   }
   to {
     top: 0px;
+  }
+}
+
+.button-primary {
+  background-color: $button-primary;
+  color: $basic-color;
+
+  &:hover {
+    background-color: rgb(252, 73, 3);
+    color: $basic-color;
   }
 }
 

@@ -9,6 +9,8 @@ import { ThankYouModule } from './components/thank-you/thank-you.module';
 import { LoadingModule } from './shared/loading/loading.module';
 import { MessagesModule } from './shared/messages/messages.module';
 import { MessageService } from './services/messages.service';
+import { ModalModule } from './shared/modal/modal.module';
+import { ModalService } from './services/modal.service';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
@@ -20,8 +22,9 @@ import { MessageService } from './services/messages.service';
     ThankYouModule,
     LoadingModule,
     MessagesModule,
+    ModalModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ModalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

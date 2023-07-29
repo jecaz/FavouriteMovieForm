@@ -1,3 +1,4 @@
+import { ModalService } from './../../services/modal.service';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,14 +12,15 @@ import {
   debounceTime,
   distinctUntilChanged,
   filter,
-  switchMap,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 import { MovieService } from '../../services/movie.service';
 import { DropdownMenu } from '../../models/dropdown.model';
 import { Movie } from '../../models/movie.model';
 import { FavouriteMovie } from '../../models/favourite-movie.model';
 import { Unsubscribe } from '../../shared/utils/unsubscribe';
+import { startWith, concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-form',
@@ -32,7 +34,10 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
   movies$: Observable<Movie[]>;
   isAutocompleteOpen = false;
 
-  constructor(protected movieService: MovieService, protected router: Router) {
+  constructor(
+    protected movieService: MovieService,
+    protected router: Router,
+    protected modalService: ModalService) {
     super();
   }
 
@@ -55,45 +60,22 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
     }
     const movie: FavouriteMovie = Object.assign(this.movieForm.getRawValue());
     sessionStorage.setItem('favouriteMovie', JSON.stringify(movie));
-    this.router.navigate(['thankyou']);
+    this.setModalContent();
+    this.modalService.open().pipe(
+      takeUntil(this.destroy$),
+      filter((action) => !!action),
+      tap(() => this.router.navigate(['thankyou']))
+    ).subscribe();
   }
 
-  // validateErrorMessages(form: FormGroup) {
-  // Object.keys(form.controls).forEach((name) => {
-  //   const control = form.controls[name].errors;
-  //   if (control && control.required) {
-  //     form.controls[name].setErrors({ requiredError: true });
-  //   } else if (control && control.email) {
-  //     form.controls[name].setErrors({ emailError: true });
-  //   } else if (control && control.pattern) {
-  //     form.controls[name].setErrors({ patternError: true });
-  //   } else if (control && control.minlength) {
-  //     form.controls[name].setErrors({ minLengthError: true });
-  //   } else if (control && control.maxlength) {
-  //     form.controls[name].setErrors({ maxLengthError: true });
-  //   }
-  // });
-  // }
-
-  // SOLUTION FOR SETTING VALIDATIONS FOR POST CODE BY USING FUNCTION WHICH RETURNS OBJECT OF TYPE ValidatorFn
-  // postCodeValidator(country: string): ValidatorFn {
-  //   this.movieForm.get('postCode').clearValidators();
-  //   return (formControl: FormControl): ValidationErrors => {
-  //     if (country === 'Ireland') {
-  //       return Validators.compose([
-  //         Validators.minLength(6),
-  //         Validators.maxLength(10),
-  //       ])(formControl);
-  //     } else {
-  //       return Validators.compose([
-  //         Validators.required,
-  //         Validators.pattern(
-  //           '^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$'
-  //         ),
-  //       ])(formControl);
-  //     }
-  //   };
-  // }
+  private setModalContent(): void {
+    this.modalService.setModalContent({
+      title: 'Favourite movie',
+      body: 'You are one step close to submit a new favourite movie?',
+      rejectButtonText: 'Cancel',
+      confirmButtonText: 'Save',
+    });
+  }
 
   selectCountry() {
     // EXAMPLE OF SETTING VALIDATATORS BY CALLING FUNCTION postCodeValidator(country: string)
@@ -125,13 +107,13 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
     ]);
   }
 
-  getAutocompletedMovies() {
+  getAutocompletedMovies(): void {
     this.movies$ = this.movieForm.controls.favouriteMovie.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      filter((searchValue) => !!searchValue && this.isAutocompleteOpen),
+      filter((searchValue) => !!searchValue),
       takeUntil(this.destroy$),
-      switchMap((searchValue: string) => this.movieService.getMoviesByTitle('movie', searchValue))
+      concatMap((searchValue: string) => this.movieService.getMoviesByTitle('movie', searchValue))
     );
   }
 
