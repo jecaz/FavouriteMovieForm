@@ -13,11 +13,6 @@ import { LoadingComponent } from '../loading/loading.component';
   selector: '[spinner]',
 })
 export class SpinnerDirective {
-  // Create resolver for loading component
-  loadingFactory: ComponentFactory<LoadingComponent> =
-    this.componentFactoryResolver.resolveComponentFactory(LoadingComponent);
-  loadingComponent: ComponentRef<LoadingComponent>;
-
   // @Input('spinner') show: boolean;
 
   // One solution with Input setter

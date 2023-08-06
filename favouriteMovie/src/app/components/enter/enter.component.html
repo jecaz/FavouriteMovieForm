@@ -1,7 +1,19 @@
 <div class="row">
   <div class="col-6 m-auto">
+    <h2 class="text-light">Form with control value accessor directive</h2>
     <app-card [title]="'Your Favourite Movie'" [icon]="'fas fa-film'">
       <app-movie-form card-body [movieForm]="movieForm"></app-movie-form>
+    </app-card>
+  </div>
+  <div class="col-6 m-auto">
+    <h2 class="text-light">Dynamically generated form components</h2>
+    <app-card [title]="'Your Favourite Movie'" [icon]="'fas fa-film'">
+      <dynamic-form
+          card-body
+          [config]="config"
+          #form="dynamicForm"
+          (submit)="submit($event)">
+      </dynamic-form>
     </app-card>
   </div>
 </div>

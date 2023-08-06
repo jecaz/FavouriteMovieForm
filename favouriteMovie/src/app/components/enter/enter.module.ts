@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from '../../shared/card/card.module';
 import { EnterComponent } from './enter.component';
 import { MovieFormModule } from '../movie-form/movie-form.module';
+import { DynamicFormModule } from '../../shared/dynamic-form/dynamic-form.module';
+import { CountryService } from '../../services/country.service';
 
 @NgModule({
   declarations: [EnterComponent],
@@ -13,8 +15,9 @@ import { MovieFormModule } from '../movie-form/movie-form.module';
     ReactiveFormsModule,
     CardModule,
     MovieFormModule,
+    DynamicFormModule
   ],
-  providers: [],
+  providers: [CountryService],
   exports: [EnterComponent],
 })
 export class EnterModule {}

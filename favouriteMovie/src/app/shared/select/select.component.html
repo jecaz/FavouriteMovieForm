@@ -4,8 +4,8 @@
   name="countries"
   id="{{ controlName }}"
   aria-label="Select dropdown menu">
-  <option disabled value="">Please select</option>
+  <option disabled value="undefined">Please select</option>
   <option *ngFor="let option of options" [value]="option.value">
-    {{ option.value }}
+    {{ option.label }}
   </option>
 </select>

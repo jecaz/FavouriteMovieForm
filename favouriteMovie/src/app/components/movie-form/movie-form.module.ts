@@ -1,3 +1,4 @@
+import { CountryService } from './../../services/country.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,9 +19,9 @@ import { ValueAccessorModule } from '../../shared/directives/value-accessor.modu
     InputModule,
     SelectModule,
     ButtonModule,
-    ValueAccessorModule
+    ValueAccessorModule,
   ],
-  providers: [],
+  providers: [CountryService],
   exports: [MovieFormComponent],
 })
 export class MovieFormModule {}

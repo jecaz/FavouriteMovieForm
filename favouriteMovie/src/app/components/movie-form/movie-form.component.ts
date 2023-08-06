@@ -1,3 +1,4 @@
+import { CountryService } from './../../services/country.service';
 import { ModalService } from './../../services/modal.service';
 import {
   ChangeDetectionStrategy,
@@ -5,13 +6,14 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   filter,
+  switchMap,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -20,7 +22,7 @@ import { DropdownMenu } from '../../models/dropdown.model';
 import { Movie } from '../../models/movie.model';
 import { FavouriteMovie } from '../../models/favourite-movie.model';
 import { Unsubscribe } from '../../shared/utils/unsubscribe';
-import { startWith, concatMap } from 'rxjs/operators';
+import { IRL_POST_CODE_VALIDATORS, UK_POST_CODE_VALIDATORS } from '../../shared/validators/post-code.validator';
 
 @Component({
   selector: 'app-movie-form',
@@ -35,6 +37,7 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
   isAutocompleteOpen = false;
 
   constructor(
+    protected countryService: CountryService,
     protected movieService: MovieService,
     protected router: Router,
     protected modalService: ModalService) {
@@ -42,15 +45,8 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCountryDropdown();
+    this.countryDropdown = this.countryService.getCountryDropdown();
     this.getAutocompletedMovies();
-  }
-
-  getCountryDropdown() {
-    this.countryDropdown = [
-      { label: 'IRL', value: 'Ireland' },
-      { label: 'GBR', value: 'United Kingdom' },
-    ];
   }
 
   submitForm() {
@@ -71,7 +67,7 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
   private setModalContent(): void {
     this.modalService.setModalContent({
       title: 'Favourite movie',
-      body: 'You are one step close to submit a new favourite movie?',
+      body: 'You are one step close to submit a new favourite movie.',
       rejectButtonText: 'Cancel',
       confirmButtonText: 'Save',
     });
@@ -83,7 +79,7 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
     //   this.postCodeValidator(this.movieForm.get('country').value)
     // );
     this.movieForm.get('postCode').clearValidators();
-    if (this.movieForm.get('country').value === 'Ireland') {
+    if (this.movieForm.get('country').value === 'IRL') {
       this.setPostCodeValidatorsIRL();
     } else {
       this.setPostCodeValidatorsUK();
@@ -92,19 +88,11 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
   }
 
   private setPostCodeValidatorsIRL() {
-    this.movieForm.controls.postCode.setValidators([
-      Validators.minLength(6),
-      Validators.maxLength(10),
-    ]);
+    this.movieForm.controls.postCode.setValidators(IRL_POST_CODE_VALIDATORS);
   }
 
   private setPostCodeValidatorsUK() {
-    this.movieForm.controls.postCode.setValidators([
-      Validators.required,
-      Validators.pattern(
-        '^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$'
-      ),
-    ]);
+    this.movieForm.controls.postCode.setValidators(UK_POST_CODE_VALIDATORS);
   }
 
   getAutocompletedMovies(): void {
@@ -113,12 +101,12 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
       distinctUntilChanged(),
       filter((searchValue) => !!searchValue),
       takeUntil(this.destroy$),
-      concatMap((searchValue: string) => this.movieService.getMoviesByTitle('movie', searchValue))
+      switchMap((searchValue: string) => this.movieService.getMoviesByTitle('movie', searchValue))
     );
   }
 
-  selectMovie(movieTitle: string) {
+  selectMovie(favouriteMovie: string) {
     this.isAutocompleteOpen = false;
-    this.movieForm.controls.favouriteMovie.setValue(movieTitle);
+    this.movieForm.patchValue({ favouriteMovie });
   }
 }

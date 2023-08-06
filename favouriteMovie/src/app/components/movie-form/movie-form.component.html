@@ -101,7 +101,7 @@
       {{ "Required 6-10 characters" }}
     </span>
     <span
-      *ngIf="movieForm.get('postCode').dirty && movieForm.get('postCode').hasError('pattern')"
+      *ngIf="movieForm.get('postCode').dirty && movieForm.get('postCode').hasError('postCodeUk')"
       class="error-message"
     >
       {{ "Wrong post code format" }}
