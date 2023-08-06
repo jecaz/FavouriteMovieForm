@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'loading',
@@ -7,5 +6,4 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./../../../styles/loading/loading.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoadingComponent {
-}
+export class LoadingComponent {}

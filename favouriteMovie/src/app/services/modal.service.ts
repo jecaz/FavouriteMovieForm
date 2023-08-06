@@ -1,6 +1,6 @@
-import { ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, Injectable, Injector, TemplateRef } from "@angular/core";
+import { ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, Injectable, Injector, TemplateRef } from '@angular/core';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { ModalContent } from "../models/modal.model";
+import { ModalContent } from '../models/modal.model';
 import { ModalComponent } from '../shared/modal/modal.component';
 
 @Injectable()

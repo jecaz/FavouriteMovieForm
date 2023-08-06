@@ -1,4 +1,4 @@
-import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { LoadingService } from './services/loading.service';
 import { ModalService } from './services/modal.service';
 
@@ -8,7 +8,7 @@ import { ModalService } from './services/modal.service';
   styles: ['.container {margin-top: 100px}'],
   providers: [LoadingService],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   @ViewChild('modalTemplate')
   modal: TemplateRef<ElementRef>;
 

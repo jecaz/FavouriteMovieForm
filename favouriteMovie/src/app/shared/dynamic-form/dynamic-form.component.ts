@@ -23,7 +23,7 @@ export class DynamicFormComponent implements OnInit {
   config: FormConfig[] = [];
 
   @Output()
-  submit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  submitForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   form: FormGroup;
 
@@ -74,7 +74,7 @@ export class DynamicFormComponent implements OnInit {
     this.form.markAsDirty();
     event.preventDefault();
     event.stopPropagation();
-    this.submit.emit(this.form);
+    this.submitForm.emit(this.form);
   }
 
   setDisabled(name: string, disable: boolean): void  {
