@@ -1,0 +1,146 @@
+<form [formGroup]="movieForm" class="p-3">
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      class="text-light"
+      for="name"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Name</label
+    >
+    <app-input
+      #name
+      [valueAccessor]="name"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
+      formControlName="name"
+      [controlName]="'name'"
+    ></app-input>
+    <span
+      class="error-message"
+      *ngIf="movieForm.get('name').touched && movieForm.get('name').hasError('required')">
+      {{ "Required field" }}
+    </span>
+    <span
+      class="error-message"
+      *ngIf="movieForm.get('name').hasError('pattern')">
+      {{ "Numbers not allowed" }}
+    </span>
+  </div>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      class="text-light"
+      for="username"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Username</label
+    >
+    <app-input
+      #username
+      [valueAccessor]="username"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
+      formControlName="username"
+      [controlName]="'username'"
+    ></app-input>
+    <span
+      *ngIf="movieForm.get('username').hasError('email')"
+      class="error-message"
+    >
+      {{ "Email required" }}
+    </span>
+  </div>
+  <div class="my-3" [class.d-flex]="readonly">
+    <label
+      class="text-light"
+      for="country-select"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >{{ "Choose a country" }}</label
+    >
+    <app-select
+      *ngIf="!readonly"
+      #country
+      [valueAccessor]="country"
+      [ngClass]="readonly ? 'w-50' : ''"
+      [options]="countryDropdown"
+      formControlName="country"
+      [controlName]="'country'"
+      (change)="selectCountry()"
+    ></app-select>
+    <app-input
+      #postCode
+      [valueAccessor]="postCode"
+      *ngIf="readonly"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
+      formControlName="postCode"
+      [controlName]="'postCode'"
+    ></app-input>
+    <span
+      *ngIf="movieForm.get('country').touched && movieForm.get('country').hasError('required')"
+      class="error-message"
+    >
+      {{ "Required field" }}
+    </span>
+  </div>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      class="text-light"
+      for="postCode"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Post Code</label
+    >
+    <app-input
+      #postCode
+      [valueAccessor]="postCode"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
+      formControlName="postCode"
+      [controlName]="'postCode'"
+    ></app-input>
+    <span
+      *ngIf="
+        movieForm.get('postCode').hasError('minlength') ||
+        movieForm.get('postCode').hasError('maxlength')
+      "
+      class="error-message"
+    >
+      {{ "Required 6-10 characters" }}
+    </span>
+    <span
+      *ngIf="movieForm.get('postCode').dirty && movieForm.get('postCode').hasError('postCodeUk')"
+      class="error-message"
+    >
+      {{ "Wrong post code format" }}
+    </span>
+    <span
+      *ngIf="movieForm.get('country').touched && movieForm.get('postCode').hasError('required')"
+      class="error-message"
+    >
+      {{ "Required field" }}
+    </span>
+  </div>
+  <div class="mb-3" [class.d-flex]="readonly">
+    <label
+      class="text-light"
+      for="favouriteMovie"
+      [ngClass]="readonly ? 'align-self-center fw-bold w-50' : 'form-label'"
+      >Favourite Movie</label
+    >
+    <app-input
+      #favouriteMovie
+      [valueAccessor]="favouriteMovie"
+      [ngClass]="readonly ? 'border-none w-50' : ''"
+      (keyup)="isAutocompleteOpen = true"
+      formControlName="favouriteMovie"
+      [controlName]="'favourite movie'"
+    ></app-input>
+    <ng-container *ngIf="isAutocompleteOpen && movies$ | async as movies">
+        <ul class="list-group position-absolute w-75 border-bottom">
+          <li
+            class="list-group-item bg-light text-dark pointer"
+            *ngFor="let movie of movies"
+            (click)="selectMovie(movie.Title)"
+          >
+            {{ movie.Title }}
+          </li>
+        </ul>
+    </ng-container>
+  </div>
+  <div *ngIf="!readonly" class="d-flex justify-content-end">
+    <app-button [label]="'Submit'" (click)="submitForm()"></app-button>
+  </div>
+</form>

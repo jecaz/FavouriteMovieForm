@@ -1,0 +1,46 @@
+<app-card [title]="'Movie details'">
+  <div card-body class="row movie w-100 m-auto">
+    <div class="col-2">
+      <a class="movie-poster" [href]="movie.Poster" target="_blank">
+        <img [src]="movie.Poster" alt="" height="98" />
+      </a>
+    </div>
+    <div class="col-10">
+      <h5 class="text-primary">{{ movie.Title }}</h5>
+      <p class="text-muted">
+        <span>{{ movie.Runtime }}</span>
+        <span class="px-2">|</span>
+        <span>{{ movie.Genre }}</span>
+      </p>
+      <hr class="text-primary" />
+      <div class="ratings-bar position-relative">
+        <div class="d-inline-block me-4">
+          <span class="fas fa-star text-warning me-2"></span>
+          <strong>{{ movie.imdbRating }}</strong>
+        </div>
+        <div class="d-inline-block">
+          <span class="far fa-star me-2"></span>
+          <span (click)="toggleStarRating()" class="text-primary pointer"
+            >Rate this</span
+          >
+          <div
+            *ngIf="starRatingVisible"
+            class="position-absolute"
+            style="top: calc(100% - 60px)"
+          >
+            <app-star-rating
+              (activeRatingBar)="closeStarRating($event)"
+            ></app-star-rating>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted py-4 m-0">{{ movie.Plot }}</p>
+      <p>
+        Stars: <span class="text-muted">{{ movie.Actors }}</span>
+      </p>
+      <p>
+        Votes: <span class="text-muted">{{ movie.imdbVotes }}</span>
+      </p>
+    </div>
+  </div>
+</app-card>
