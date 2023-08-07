@@ -16,6 +16,13 @@ describe('DynamicSelectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DynamicSelectComponent);
     component = fixture.componentInstance;
+    component.config  = {
+      fieldType: 'select',
+      label: 'Country',
+      name: 'country',
+      options: [],
+      placeholder: 'Select an option',
+    }
     fixture.detectChanges();
   });
 

@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MessagesComponent } from './messages.component';
+import { MockProvider } from 'ng-mocks';
+import { MessageService } from '../../services/messages.service';
+import { of } from 'rxjs';
 
 describe('MessagesComponent', () => {
   let component: MessagesComponent;
@@ -8,7 +11,10 @@ describe('MessagesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MessagesComponent ]
+      declarations: [MessagesComponent],
+      providers: [MockProvider(MessageService, {
+        errors$: of(),
+      })]
     })
     .compileComponents();
   });

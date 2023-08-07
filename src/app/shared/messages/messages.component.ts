@@ -12,9 +12,7 @@ export class MessagesComponent implements OnInit {
   showMessages = false;
   errors$: Observable<string[]>;
 
-  constructor(protected messagesService: MessageService) {
-    console.log('Created messages component');
-  }
+  constructor(protected messagesService: MessageService) {}
 
   ngOnInit(): void {
     this.errors$ = this.messagesService.errors$.pipe(

@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DynamicButtonComponent } from './dynamic-button.component';
+import { MockProvider } from 'ng-mocks';
+import { FormService } from '../../service/form.service';
+import { of } from 'rxjs';
 
 describe('DynamicButtonComponent', () => {
   let component: DynamicButtonComponent;
@@ -8,7 +11,10 @@ describe('DynamicButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DynamicButtonComponent ]
+      declarations: [DynamicButtonComponent],
+      providers: [MockProvider(FormService, {
+        disabledButton$: of(),
+      })]
     })
     .compileComponents();
   });
@@ -16,6 +22,12 @@ describe('DynamicButtonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DynamicButtonComponent);
     component = fixture.componentInstance;
+    component.config = {
+      label: 'Submit',
+      name: 'submit',
+      fieldType: 'button',
+      cssClass: 'd-flex justify-content-end',
+    };
     fixture.detectChanges();
   });
 

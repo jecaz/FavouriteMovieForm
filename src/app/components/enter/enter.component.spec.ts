@@ -7,6 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { EnterComponent } from './enter.component';
+import { MockProviders, MockModule, MockProvider } from 'ng-mocks';
+import { CountryService } from '../../services/country.service';
+import { FormService } from '../../shared/dynamic-form/service/form.service';
+import { MovieService } from '../../services/movie.service';
+import { CardModule } from '../../shared/card/card.module';
+import { of } from 'rxjs';
 
 const mockValidForm = new FormGroup({
   name: new FormControl('Name', [
@@ -34,8 +40,13 @@ describe('EnterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MockModule(CardModule)],
       declarations: [EnterComponent, MockMovieFormComponent],
-      providers: [FormBuilder],
+      providers: [
+        MockProviders(FormBuilder, CountryService, FormService, MovieService),
+        MockProvider(FormService, {
+          formChanged$: of(),
+      })],
     }).compileComponents();
   });
 

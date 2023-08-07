@@ -16,6 +16,12 @@ describe('ModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
+    component.modalContent = {
+      title: 'Modal',
+      body: 'Test body',
+      rejectButtonText: 'Cancel',
+      confirmButtonText: 'Confirm',
+    }
     fixture.detectChanges();
   });
 

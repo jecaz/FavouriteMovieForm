@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --no-watch --source-map=false --browsers=ChromeHeadless",
     "lint": "ng lint --fix"
   },
   "private": true,
@@ -22,6 +22,7 @@
     "@angular/router": "~12.1.0",
     "bootstrap": "^5.1.3",
     "eslint-plugin-deprecation": "^1.5.0",
+    "ng-mocks": "^14.11.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
