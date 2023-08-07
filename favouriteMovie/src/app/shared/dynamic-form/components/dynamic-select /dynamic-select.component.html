@@ -1,9 +1,0 @@
-<div [formGroup]="group">
-  <label class="text-light form-label">{{ config.label }}</label>
-  <select class="form-select" [formControlName]="config.name">
-    <option disabled value="undefined">{{ config.placeholder }}</option>
-    <option *ngFor="let option of config.options" [value]="option.value">
-      {{ option.label }}
-    </option>
-  </select>
-</div>

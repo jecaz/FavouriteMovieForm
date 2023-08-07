@@ -1,8 +1,0 @@
-<div [formGroup]="group">
-  <button
-    class="btn button-primary px-5 text-light"
-    [disabled]="config.disabled || (formService.disabledButton$ | async)"
-    type="submit">
-    {{ config.label }}
-  </button>
-</div>
