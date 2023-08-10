@@ -92,7 +92,7 @@ export class EnterComponent extends Unsubscribe implements OnInit {
             this.formService.setAutocompletedOption(null);
             return false;
           }
-          return true
+          return true;
         }),
         takeUntil(this.destroy$),
         switchMap((searchValue: string) =>

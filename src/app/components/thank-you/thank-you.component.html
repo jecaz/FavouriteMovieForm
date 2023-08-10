@@ -1,10 +1,6 @@
 <ng-container *ngIf="movieForm; else noSubmittedForm">
   <div class="row">
     <div class="col-6">
-      <div class="alert alert-info" role="alert">Form successfully submitted!</div>
-    </div>
-    <div class="col-6"></div>
-    <div class="col-6">
       <app-card [title]="'Thank you for submitting form'" [icon]="'fas fa-film'">
         <app-movie-form card-body [movieForm]="movieForm" [readonly]="true"></app-movie-form>
         <div card-body class="row me-3 text-end">
@@ -17,7 +13,7 @@
     <div class="col-6 position-relative">
       <ng-container *ngIf="showDetails">
         <ng-container *ngIf="movieDetails$ | async as movieState">
-          <app-movie-details *spinner="movieState.isLoading" [movie]="movieState.value">
+          <app-movie-details *spinner="movieState.isLoading" [movie]="movieState.data">
           </app-movie-details>
         </ng-container>
       </ng-container>

@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --no-watch --source-map=false --browsers=ChromeHeadless",
-    "lint": "ng lint --fix"
+    "lint": "ng lint --fix",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "typescript": "~4.3.2"
+    "typescript": "~4.3.2",
+    "husky": "^8.0.0"
   }
 }

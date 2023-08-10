@@ -20,6 +20,6 @@ export interface Movie {
 
 export interface HttpRequestState<T> {
   isLoading: boolean;
-  value?: T;
+  data?: T;
   error?: HttpErrorResponse | Error;
 }

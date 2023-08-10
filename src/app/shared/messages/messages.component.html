@@ -1,10 +1,11 @@
-<ng-container *ngIf="errors$ | async as errors">
+<ng-container *ngIf="messages$ | async as messages">
   <div
-    class="messages-container d-flex justify-content-center position-relative p-3"
-    *ngIf="showMessages"
+    @fade
+    class="messages messages-{{messages[0].type}} d-flex justify-content-center position-absolute w-100 p-3"
+    *ngIf="showMessage$ | async"
   >
-    <div class="message" *ngFor="let error of errors">
-      {{ error }}
+    <div class="message" *ngFor="let message of messages">
+      {{ message.message }}
     </div>
     <span
       class="fas fa-times close pointer position-absolute"
