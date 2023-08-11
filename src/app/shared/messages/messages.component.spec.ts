@@ -13,7 +13,7 @@ describe('MessagesComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MessagesComponent],
       providers: [MockProvider(MessageService, {
-        errors$: of(),
+        messages$: of(),
       })]
     })
     .compileComponents();

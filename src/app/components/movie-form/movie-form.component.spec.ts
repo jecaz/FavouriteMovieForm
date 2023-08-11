@@ -19,6 +19,7 @@ import { By } from '@angular/platform-browser';
 import { MockProvider } from 'ng-mocks';
 import { ModalService } from '../../services/modal.service';
 import { ValueAccessorModule } from '../../shared/directives/value-accessor.module';
+import { MessageService } from '../../services/messages.service';
 
 const mockValidForm = new FormGroup({
   name: new FormControl('Name', [
@@ -72,6 +73,7 @@ describe('MovieFormComponent', () => {
         }),
         MockProvider(ModalService),
         MockProvider(Router),
+        MockProvider(MessageService),
         MockProvider(MovieService, {
           getMoviesByTitle: () => of(movies)
         }),

@@ -1,3 +1,4 @@
+import { MessageService } from './../../services/messages.service';
 import { CountryService } from './../../services/country.service';
 import { ModalService } from './../../services/modal.service';
 import {
@@ -23,6 +24,7 @@ import { Movie } from '../../models/movie.model';
 import { FavouriteMovie } from '../../models/favourite-movie.model';
 import { Unsubscribe } from '../../shared/utils/unsubscribe';
 import { IRL_POST_CODE_VALIDATORS, UK_POST_CODE_VALIDATORS } from '../../shared/validators/post-code.validator';
+import { MessageType } from 'src/app/models/message.model';
 
 @Component({
   selector: 'app-movie-form',
@@ -40,7 +42,8 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
     protected countryService: CountryService,
     protected movieService: MovieService,
     protected router: Router,
-    protected modalService: ModalService) {
+    protected modalService: ModalService,
+    protected messageService: MessageService) {
     super();
   }
 
@@ -60,7 +63,13 @@ export class MovieFormComponent extends Unsubscribe implements OnInit {
     this.modalService.open().pipe(
       takeUntil(this.destroy$),
       filter((action) => !!action),
-      tap(() => this.router.navigate(['thankyou']))
+      tap(() => {
+        this.messageService.showMessages({
+          message: 'Form successfully submitted!',
+          type: MessageType.SUCCESS,
+        });
+        this.router.navigate(['thankyou'])
+      })
     ).subscribe();
   }
 

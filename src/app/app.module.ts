@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -11,11 +10,12 @@ import { MessagesModule } from './shared/messages/messages.module';
 import { MessageService } from './services/messages.service';
 import { ModalModule } from './shared/modal/modal.module';
 import { ModalService } from './services/modal.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     EnterModule,

@@ -28,7 +28,6 @@ export class DynamicFormComponent implements OnInit {
   form: FormGroup;
 
   get configControls(): FormConfig[] {
-    // return this.config.filter(({ fieldType }) => fieldType !== 'button');
     return this.formService.configControls(this.config);
   }
 

@@ -44,15 +44,13 @@ export class ThankYouComponent implements OnInit {
       return;
     }
     this.showDetails = true;
-    // this.movieDetails$ =
-    //   this.loadingService.showLoaderUntilCompleted(this.getMovieByTitle(this.movieForm.controls.favouriteMovie.value));
   }
 
   getMovieByTitle(title: string): Observable<HttpRequestState<Movie>> {
     return this.movieService
       .getMoviesByTitle('movie', title)
       .pipe(
-        switchMap((movies: Movie[]) =>this.movieService.getMovieById(movies[0].imdbID)),
+        switchMap((movies: Movie[]) => this.movieService.getMovieById(movies[0].imdbID)),
       );
   }
 }
